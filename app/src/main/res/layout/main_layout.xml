@@ -1,0 +1,57 @@
+<?xml version="1.0" encoding="utf-8"?>
+<RelativeLayout xmlns:android="http://schemas.android.com/apk/res/android"
+              android:orientation="vertical"
+              android:layout_width="match_parent"
+              android:layout_height="match_parent" android:weightSum="1" android:background="#13d1c5cb"
+              android:id="@+id/rel">
+
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Left Click"
+            android:id="@+id/buttonLeftCl"
+            android:layout_above="@+id/start_button" android:layout_toLeftOf="@+id/textView"
+            android:layout_toStartOf="@+id/textView"/>
+    <Button
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Right Click"
+            android:id="@+id/buttonRightCl" android:layout_alignTop="@+id/buttonLeftCl" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true" android:layout_marginRight="35dp" android:layout_marginEnd="35dp"
+            android:singleLine="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Hellow_world"
+            android:id="@+id/textView" android:layout_alignParentTop="true" android:layout_centerHorizontal="true"/>
+    <TextView
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/area"
+            android:layout_below="@+id/textView" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"
+            android:layout_alignParentRight="true" android:layout_alignParentEnd="true" android:background="#ffe8f8ff"
+            android:layout_above="@+id/buttonLeftCl"/>
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Start"
+            android:id="@+id/start_button"
+            android:layout_alignParentBottom="true" android:layout_alignParentLeft="true"
+            android:layout_alignParentStart="true"/>
+    <Button
+            style="?android:attr/buttonStyleSmall"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:text="Stop"
+            android:id="@+id/Stop_button"
+            android:layout_alignParentBottom="true" android:layout_alignParentRight="true"
+            android:layout_alignParentEnd="true"/>
+    <EditText
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:id="@+id/port" android:layout_alignParentBottom="true"
+            android:layout_toRightOf="@+id/buttonLeftCl" android:layout_alignRight="@+id/textView"
+            android:layout_alignEnd="@+id/textView" android:text="port" android:editable="true" android:enabled="true"/>
+</RelativeLayout>
