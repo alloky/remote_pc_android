@@ -2,6 +2,7 @@ package com.alloky.myapplication.app;
 
 import android.app.Activity;
 import android.app.Dialog;
+import android.os.AsyncTask;
 import android.os.Bundle;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -47,6 +48,7 @@ public class Activity_Main extends Activity implements OnTouchListener
 
     final static String TAG = "MyLog";
 
+
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
@@ -78,13 +80,15 @@ public class Activity_Main extends Activity implements OnTouchListener
                         outMas[0]= 10;
                         outMas[1] = xPos;
                         outMas[2] = yPos;
-                        client.sendData(outMas);
+                       // client.sendData(outMas);
+                        new SendTrdTask().execute(outMas);
                         break;
                     case R.id.buttonRightCl:
                         outMas[0]= 20;
                         outMas[1] = xPos;
                         outMas[2] = yPos;
-                        client.sendData(outMas);
+                       // client.sendData(outMas);
+                        new SendTrdTask().execute(outMas);
                         break;
                 }
             }
@@ -108,33 +112,38 @@ public class Activity_Main extends Activity implements OnTouchListener
                 outMas[0] = 1;
                 outMas[1] = xPos;
                 outMas[2] = yPos;
-                client.sendData(outMas);
+               // client.sendData(outMas);
+                new SendTrdTask().execute(outMas);
                 break;
             case MotionEvent.ACTION_MOVE:
                 textOfView = "Move: X - " + xPos + "Y: -"+ yPos;
                 outMas[0] = 2;
                 outMas[1] = xPos;
                 outMas[2] = yPos;
-                client.sendData(outMas);
+                //client.sendData(outMas);
+                new SendTrdTask().execute(outMas);
                 break;
             case MotionEvent.ACTION_UP:
                 textOfView = "Up: X - " + xPos + "Y: -"+ yPos;
                 outMas[0] = 3;
                 outMas[1] = xPos;
                 outMas[2] = yPos;
-                client.sendData(outMas);
+                //client.sendData(outMas);
+                new SendTrdTask().execute(outMas);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 textOfView = "Up: X - " + xPos + "Y: -"+ yPos;
                 outMas[0] = 3;
                 outMas[1] = xPos;
                 outMas[2] = yPos;
-                client.sendData(outMas);
+                //client.sendData(outMas);
+                new SendTrdTask().execute(outMas);
                 break;
         }
 
-        textView.setText(textOfView);
-
+      //  textView.setText(textOfView);
+       // client.close();
+       // client = new client();
         return true;
     }
 

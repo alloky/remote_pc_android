@@ -4,6 +4,7 @@ import android.util.Log;
 import java.io.IOException;
 import java.io.ObjectInputStream;
 import java.io.ObjectOutputStream;
+import java.io.OutputStream;
 import java.lang.*;import java.lang.ClassNotFoundException;import java.lang.Exception;import java.lang.Runnable;import java.lang.String;import java.lang.System;import java.net.InetAddress;
 import java.net.Socket;
 import java.net.SocketException;
@@ -15,6 +16,15 @@ public class client implements Runnable {
     private static Socket connection;
     private  static ObjectInputStream inputStream;
     private static ObjectOutputStream outputStream;
+
+    public static ObjectInputStream getInputStream() {
+        return inputStream;
+    }
+
+    public static ObjectOutputStream getOutputStream() {
+        return outputStream;
+    }
+
     public String port = "192.168.1.2";
 
     String  x_str;
@@ -39,34 +49,25 @@ public class client implements Runnable {
             }
         } catch (IOException e) {
             Log.i(null,"bad");
-            try {
-                Thread.sleep(100);
-            } catch (InterruptedException e1) {
-                e1.printStackTrace();
-            }
+            e.printStackTrace();
+           // try {
+          //      Thread.sleep(100);
+            //} catch (InterruptedException e1) {
+             //   e1.printStackTrace();
+           // }
             // isRunning = false;
         }
     }
 
-
     public void sendData(float[] s){
         try {
             System.out.println( this.isRunning);
-          /*  if(s[0]==(float)1.0 || s[0] == (float)2.0){
-                connection.setTcpNoDelay(true);
-            }                                           Bad idea! :(
-            if(s[0]==(float)3.0){
-                connection.setTcpNoDelay(false);
-            } */
             outputStream.flush();
             outputStream.writeObject(s);
             outputStream.flush();
+
         } catch (java.lang.Exception e) {Log.i(null,"Плохо");
-            try {
-            Thread.sleep(100);
-        } catch (InterruptedException e1) {
-            e1.printStackTrace();
-        }}
+           e.printStackTrace();}
     }
 
     public void close() {
