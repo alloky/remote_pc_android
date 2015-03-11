@@ -1,0 +1,51 @@
+
+LOG ERROR.
+
+Перенёс метод sendData() в SendTrdTask extends Asynth. Ошибка вылетает при тех же условиях как и в первый раз.
+
+-------------------------------------------------------------------------------------
+
+
+14415/com.alloky.myapplication.app I/﹕ bad
+03-11 15:32:05.361  13154-14415/com.alloky.myapplication.app W/System.err﹕ java.net.SocketException: socket failed: EMFILE (Too many open files)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at libcore.io.IoBridge.socket(IoBridge.java:585)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at java.net.PlainSocketImpl.create(PlainSocketImpl.java:202)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at java.net.Socket.startupSocket(Socket.java:565)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at java.net.Socket.<init>(Socket.java:231)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at com.alloky.myapplication.app.client.run(client.java:42)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at java.lang.Thread.run(Thread.java:841)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ Caused by: libcore.io.ErrnoException: socket failed: EMFILE (Too many open files)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at libcore.io.Posix.socket(Native Method)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at libcore.io.BlockGuardOs.socket(BlockGuardOs.java:181)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ at libcore.io.IoBridge.socket(IoBridge.java:570)
+03-11 15:32:05.371  13154-14415/com.alloky.myapplication.app W/System.err﹕ ... 5 more
+03-11 15:32:05.771  13154-13154/com.alloky.myapplication.app W/Adreno-EGLSUB﹕ <DequeueBuffer:606>: dequeue native buffer fail: Unknown error 2147483646, buffer=0x0, handle=0x0
+03-11 15:32:05.771  13154-13154/com.alloky.myapplication.app W/Adreno-EGLSUB﹕ <DequeueBuffer:606>: dequeue native buffer fail: Invalid argument, buffer=0x0, handle=0x0
+03-11 15:32:05.771  13154-13154/com.alloky.myapplication.app W/Adreno-EGL﹕ <qeglDrvAPI_eglSwapBuffers:3688>: EGL_BAD_SURFACE
+03-11 15:32:05.771  13154-13154/com.alloky.myapplication.app W/HardwareRenderer﹕ EGL error: EGL_BAD_SURFACE
+03-11 15:32:05.771  13154-13154/com.alloky.myapplication.app W/HardwareRenderer﹕ Mountain View, we've had a problem here. Switching back to software rendering.
+03-11 15:32:07.271  13154-13154/com.alloky.myapplication.app E/Surface﹕ dequeueBuffer: IGraphicBufferProducer::requestBuffer failed: -22
+03-11 15:32:07.271  13154-13154/com.alloky.myapplication.app E/Surface﹕ dequeueBuffer failed (Invalid argument)
+03-11 15:32:07.281  13154-13154/com.alloky.myapplication.app E/ViewRootImpl﹕ Could not lock surface
+    java.lang.IllegalArgumentException
+            at android.view.Surface.nativeLockCanvas(Native Method)
+            at android.view.Surface.lockCanvas(Surface.java:243)
+            at android.view.ViewRootImpl.drawSoftware(ViewRootImpl.java:2435)
+            at android.view.ViewRootImpl.draw(ViewRootImpl.java:2409)
+            at android.view.ViewRootImpl.performDraw(ViewRootImpl.java:2253)
+            at android.view.ViewRootImpl.performTraversals(ViewRootImpl.java:1883)
+            at android.view.ViewRootImpl.doTraversal(ViewRootImpl.java:1000)
+            at android.view.ViewRootImpl$TraversalRunnable.run(ViewRootImpl.java:5622)
+            at android.view.Choreographer$CallbackRecord.run(Choreographer.java:761)
+            at android.view.Choreographer.doCallbacks(Choreographer.java:574)
+            at android.view.Choreographer.doFrame(Choreographer.java:544)
+            at android.view.Choreographer$FrameDisplayEventReceiver.run(Choreographer.java:747)
+            at android.os.Handler.handleCallback(Handler.java:733)
+            at android.os.Handler.dispatchMessage(Handler.java:95)
+            at android.os.Looper.loop(Looper.java:212)
+            at android.app.ActivityThread.main(ActivityThread.java:5135)
+            at java.lang.reflect.Method.invokeNative(Native Method)
+            at java.lang.reflect.Method.invoke(Method.java:515)
+            at com.android.internal.os.ZygoteInit$MethodAndArgsCaller.run(ZygoteInit.java:877)
+            at com.android.internal.os.ZygoteInit.main(ZygoteInit.java:693)
+            at dalvik.system.NativeStart.main(Native Method)
