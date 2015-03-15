@@ -26,6 +26,8 @@ public class client implements Runnable {
     }
 
     public String port = "192.168.1.2";
+    private boolean isListening,isConnecting;
+    boolean onUpdate;
 
     String  x_str;
     int x;
@@ -36,13 +38,15 @@ public class client implements Runnable {
     public void  run(){
         try {
             System.out.println("Runned1");
+            connection = new Socket(InetAddress.getByName(port),1234);
+            connection.setTcpNoDelay(true);
+            inputStream = new ObjectInputStream(connection.getInputStream());
+            outputStream = new ObjectOutputStream(connection.getOutputStream());
             while (isRunning)
             {
                 System.out.println("Runned");
-                connection = new Socket(InetAddress.getByName(port),1234);
-                connection.setTcpNoDelay(true);
-                inputStream = new ObjectInputStream(connection.getInputStream());
-                outputStream = new ObjectOutputStream(connection.getOutputStream());
+
+
                 /*x_str =(String) inputStream.readObject();
                 x = Integer.parseInt(x_str);
                 robot.mouseMove(x,100);*/
@@ -58,8 +62,24 @@ public class client implements Runnable {
             // isRunning = false;
         }
     }
+    private   boolean  setUpConnection(){
+        while (isConnecting){
+            try {
+                //Todo connection =
+                connection.setTcpNoDelay(true);
+                outputStream = new ObjectOutputStream(connection.getOutputStream());
+                outputStream.flush();
+                inputStream = new ObjectInputStream(connection.getInputStream());
+                isConnecting = false;
+            }
+            catch (IOException e){
+                System.out.println("trying");
+            }
+        }
+        return true;
+    }
 
-    public void sendData(float[] s){
+   /* public void sendData(float[] s){
         try {
             System.out.println( this.isRunning);
             outputStream.flush();
@@ -68,13 +88,14 @@ public class client implements Runnable {
 
         } catch (java.lang.Exception e) {Log.i(null,"Плохо");
            e.printStackTrace();}
-    }
+    }*/
 
     public void close() {
         try {
             outputStream.close();
             inputStream.close();
             connection.close();
+
         } catch (Exception e) {e.printStackTrace();}
     }
 }

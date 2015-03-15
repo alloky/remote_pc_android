@@ -12,6 +12,8 @@ import android.view.View.OnTouchListener;
 import android.widget.*;
 import android.view.View.OnClickListener;
 
+import java.util.logging.Handler;
+
 public class Activity_Main extends Activity implements OnTouchListener
 {
     client client;
@@ -46,20 +48,35 @@ public class Activity_Main extends Activity implements OnTouchListener
 
     SurfaceView surfaceView;
 
+    stackMsg stackMsg;
+
+    SendTrdTask sender;
+
     final static String TAG = "MyLog";
 
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
+
         setContentView(R.layout.main_layout);
+
        textView =(TextView)findViewById(R.id.area);
+
         buttonLeftCl=(Button)findViewById(R.id.buttonLeftCl);
+
         buttonRightCl =(Button)findViewById(R.id.buttonRightCl);
+
         startButton = (Button)findViewById(R.id.start_button);
+
         stopButton = (Button)findViewById(R.id.Stop_button);
+
          area = (RelativeLayout)findViewById(R.id.rel);
+
         textField = (EditText)findViewById(R.id.port);
+
+        sender = new SendTrdTask();
+
         clickListener = new OnClickListener() {
             @Override
             public void onClick(View v) {
@@ -70,6 +87,7 @@ public class Activity_Main extends Activity implements OnTouchListener
                         {
                             client.port = textField.getText().toString();
                         }
+
                         thread.start();
                         break;
                     case R.id.Stop_button:
@@ -81,14 +99,14 @@ public class Activity_Main extends Activity implements OnTouchListener
                         outMas[1] = xPos;
                         outMas[2] = yPos;
                        // client.sendData(outMas);
-                        new SendTrdTask().execute(outMas);
+                        sender.doInBackground(outMas);
                         break;
                     case R.id.buttonRightCl:
                         outMas[0]= 20;
                         outMas[1] = xPos;
                         outMas[2] = yPos;
                        // client.sendData(outMas);
-                        new SendTrdTask().execute(outMas);
+                        sender.doInBackground(outMas);
                         break;
                 }
             }
@@ -113,7 +131,7 @@ public class Activity_Main extends Activity implements OnTouchListener
                 outMas[1] = xPos;
                 outMas[2] = yPos;
                // client.sendData(outMas);
-                new SendTrdTask().execute(outMas);
+                sender.doInBackground(outMas);
                 break;
             case MotionEvent.ACTION_MOVE:
                 textOfView = "Move: X - " + xPos + "Y: -"+ yPos;
@@ -121,7 +139,7 @@ public class Activity_Main extends Activity implements OnTouchListener
                 outMas[1] = xPos;
                 outMas[2] = yPos;
                 //client.sendData(outMas);
-                new SendTrdTask().execute(outMas);
+                sender.doInBackground(outMas);
                 break;
             case MotionEvent.ACTION_UP:
                 textOfView = "Up: X - " + xPos + "Y: -"+ yPos;
@@ -129,7 +147,7 @@ public class Activity_Main extends Activity implements OnTouchListener
                 outMas[1] = xPos;
                 outMas[2] = yPos;
                 //client.sendData(outMas);
-                new SendTrdTask().execute(outMas);
+                sender.doInBackground(outMas);
                 break;
             case MotionEvent.ACTION_CANCEL:
                 textOfView = "Up: X - " + xPos + "Y: -"+ yPos;
@@ -137,7 +155,7 @@ public class Activity_Main extends Activity implements OnTouchListener
                 outMas[1] = xPos;
                 outMas[2] = yPos;
                 //client.sendData(outMas);
-                new SendTrdTask().execute(outMas);
+                sender.doInBackground(outMas);
                 break;
         }
 
