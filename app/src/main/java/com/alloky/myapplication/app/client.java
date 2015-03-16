@@ -87,6 +87,7 @@ public class client implements Runnable {
         looperThread.run();
     }
     public void doInBackground(float[] f){
+        Log.i(null, "doInBack: " + f[0] + " | " +f[1] + " | " + f[2]);
         looperThread.addInStack(f);
     }
     public boolean isListening() {

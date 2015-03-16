@@ -26,6 +26,7 @@ class LooperThread extends Thread {
                super.handleMessage(msg);
                 try {
                     out = (float[]) msg.obj;
+                    Log.i(null, "InLoop: " + out[0] + " | " + out[1] + " | " + out[2]);
                     outputStream.flush();
                     outputStream.writeObject(out);
                     outputStream.flush();
@@ -39,8 +40,9 @@ class LooperThread extends Thread {
         Looper.loop();
     }
     void addInStack(float[] mas) {
-        Message m = handler.obtainMessage(1, 1, 1, mas);
+        Log.i(null,"AddIn: "+ mas[0] + " | " + mas[1] + " | " +mas[2] );
+        Message m = handler.obtainMessage(1, 1, 1, mas.clone());
         handler.sendMessage(m);
     }
-    
+
 }
