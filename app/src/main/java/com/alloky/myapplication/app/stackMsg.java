@@ -42,8 +42,5 @@ class LooperThread extends Thread {
         Message m = handler.obtainMessage(1, 1, 1, mas);
         handler.sendMessage(m);
     }
-   public void setOutputStream(){
-        client =main.getClient();
-        this.outputStream =client.getOutputStream();
-    }
+    
 }
