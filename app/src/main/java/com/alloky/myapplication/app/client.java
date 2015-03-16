@@ -16,11 +16,11 @@ public class client implements Runnable {
     private static Socket connection;
     private  static ObjectInputStream inputStream;
     private static ObjectOutputStream outputStream;
-
+    Activity_Main main;
     public static ObjectInputStream getInputStream() {
         return inputStream;
     }
-
+    LooperThread looperThread;
     public static ObjectOutputStream getOutputStream() {
         return outputStream;
     }
@@ -28,58 +28,75 @@ public class client implements Runnable {
     public String port = "192.168.1.2";
     private boolean isListening,isConnecting;
     boolean onUpdate;
-
     String  x_str;
     int x;
-    boolean isRunning = false;
-    public  client(){
-        this.isRunning = true;
+    private boolean isRunning = false;
+    public void setIsRunning(boolean i){
+        this.isRunning = i;
     }
     public void  run(){
-        try {
-            System.out.println("Runned1");
-            connection = new Socket(InetAddress.getByName(port),1234);
-            connection.setTcpNoDelay(true);
-            inputStream = new ObjectInputStream(connection.getInputStream());
-            outputStream = new ObjectOutputStream(connection.getOutputStream());
-            while (isRunning)
-            {
-                System.out.println("Runned");
 
+            if(isRunning) {
+                isConnecting = true;
+              setUpConnection();
+                try {
 
-                /*x_str =(String) inputStream.readObject();
-                x = Integer.parseInt(x_str);
-                robot.mouseMove(x,100);*/
+                        listen();
+
+                    } catch (IOException e) {
+                        System.out.println("2131");
+                        e.printStackTrace();
+                    }catch (NullPointerException e){
+                    e.printStackTrace();
+                }
+                }
             }
-        } catch (IOException e) {
-            Log.i(null,"bad");
-            e.printStackTrace();
+       // catch (IOException e) {
+           // Log.i(null,"bad");
+            //e.printStackTrace();
            // try {
           //      Thread.sleep(100);
             //} catch (InterruptedException e1) {
              //   e1.printStackTrace();
            // }
             // isRunning = false;
-        }
-    }
-    private   boolean  setUpConnection(){
+       // }
+
+    private   void  setUpConnection(){
         while (isConnecting){
             try {
-                //Todo connection =
+                System.out.println("Runned1");
+                connection = new Socket(InetAddress.getByName(port),1234);
                 connection.setTcpNoDelay(true);
                 outputStream = new ObjectOutputStream(connection.getOutputStream());
                 outputStream.flush();
                 inputStream = new ObjectInputStream(connection.getInputStream());
                 isConnecting = false;
+                isListening = true;
             }
             catch (IOException e){
-                System.out.println("trying");
+               Log.i(null,"trying");
+                e.printStackTrace();
+            }catch (NullPointerException e){
+                e.printStackTrace();
             }
         }
-        return true;
+    }
+    private void listen() throws IOException {
+        looperThread = new LooperThread();
+        looperThread.run();
+    }
+    public void doInBackground(float[] f){
+        looperThread.addInStack(f);
+    }
+    public boolean isListening() {
+        return isListening;
     }
 
-   /* public void sendData(float[] s){
+    public boolean isRunning() {
+        return isRunning;
+    }
+    /* public void sendData(float[] s){
         try {
             System.out.println( this.isRunning);
             outputStream.flush();
@@ -95,7 +112,6 @@ public class client implements Runnable {
             outputStream.close();
             inputStream.close();
             connection.close();
-
         } catch (Exception e) {e.printStackTrace();}
     }
 }
