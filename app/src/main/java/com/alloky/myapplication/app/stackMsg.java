@@ -17,6 +17,8 @@ class LooperThread extends Thread {
     private ObjectOutputStream outputStream;
     public Handler handler;
     float[] out;
+    int DATA = 1;
+    int STOP =2;
     public  void  run(){
         outputStream = client.getOutputStream();
         Looper.prepare();
@@ -24,6 +26,7 @@ class LooperThread extends Thread {
             @Override
             public void handleMessage(Message msg) {
                super.handleMessage(msg);
+                if(msg.what == DATA){
                 try {
                     out = (float[]) msg.obj;
                     Log.i(null, "InLoop: " + out[0] + " | " + out[1] + " | " + out[2]);
@@ -34,7 +37,10 @@ class LooperThread extends Thread {
                     Log.i(null, "Плохо");
                     e.printStackTrace();
                     //  textView.setText("BAAAD");
-                };
+                }}
+                if(msg.what==STOP) {
+                    
+                }
             }
         };
         Looper.loop();
@@ -42,6 +48,11 @@ class LooperThread extends Thread {
     void addInStack(float[] mas) {
         Log.i(null,"AddIn: "+ mas[0] + " | " + mas[1] + " | " +mas[2] );
         Message m = handler.obtainMessage(1, 1, 1, mas.clone());
+        handler.sendMessage(m);
+    }
+    void stopStack(){
+        Log.i(null,"stoping stack" );
+        Message m = handler.obtainMessage(2, 1, 1, 666);
         handler.sendMessage(m);
     }
 
