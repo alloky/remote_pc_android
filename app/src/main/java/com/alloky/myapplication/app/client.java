@@ -41,7 +41,7 @@ public class client implements Runnable {
               setUpConnection();
                 try {
 
-                        listen();
+                    listen();
 
                     } catch (IOException e) {
                         System.out.println("2131");
@@ -77,6 +77,9 @@ public class client implements Runnable {
             catch (IOException e){
                Log.i(null,"trying");
                 e.printStackTrace();
+                if(java.net.UnknownHostException.class == e.getClass()){
+                    port="192.168.1.4";
+                }
             }catch (NullPointerException e){
                 e.printStackTrace();
             }
@@ -114,5 +117,23 @@ public class client implements Runnable {
             inputStream.close();
             connection.close();
         } catch (Exception e) {e.printStackTrace();}
+    }
+    public void reRun(){
+        isRunning=true;
+        if(isRunning) {
+            isConnecting = true;
+            setUpConnection();
+            try {
+
+                listen();
+
+            } catch (IOException e) {
+                System.out.println("2131");
+                e.printStackTrace();
+            }catch (NullPointerException e){
+                e.printStackTrace();
+            }
+        }
+
     }
 }

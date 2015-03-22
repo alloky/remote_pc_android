@@ -46,7 +46,7 @@ public class Activity_Main extends Activity implements OnTouchListener
     LooperThread looperThread;
 
     final static String TAG = "MyLog";
-
+    boolean ftime = true;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -80,13 +80,28 @@ public class Activity_Main extends Activity implements OnTouchListener
                         {
                             client.port = textField.getText().toString();
                         }
+                        startButton.setEnabled(false);
+                        stopButton.setEnabled(true);
+                        buttonLeftCl.setEnabled(true);
+                        buttonRightCl.setEnabled(true);
+                        textView.setEnabled(true);
                         client.setIsRunning(true);
-                        thread.start();
-
+                        if(ftime) {
+                            thread.start();
+                            ftime=false;
+                        }
+                        else {
+                            thread.run();
+                        }
                         break;
                     case R.id.Stop_button:
                         client.setIsRunning(false);
                         client.close();
+                        startButton.setEnabled(true);
+                        buttonLeftCl.setEnabled(false);
+                        buttonRightCl.setEnabled(false);
+                        textView.setEnabled(false);
+                        stopButton.setEnabled(false);
                         textView.setText("stoped");
                         break;
                     case R.id.buttonLeftCl:
@@ -114,7 +129,10 @@ public class Activity_Main extends Activity implements OnTouchListener
         buttonLeftCl.setOnClickListener(clickListener);
         stopButton.setOnClickListener(clickListener);
         startButton.setOnClickListener(clickListener);
-
+        stopButton.setEnabled(false);
+        buttonLeftCl.setEnabled(false);
+        buttonRightCl.setEnabled(false);
+        textView.setEnabled(false);
     }
     public boolean onTouch(View v, MotionEvent event) {
 
